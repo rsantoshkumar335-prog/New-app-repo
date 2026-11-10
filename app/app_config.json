@@ -1,0 +1,69 @@
+{
+  "javaVersion": "21",
+  "libraries": [],
+  "libraryEntries": {
+    "1": {
+      "adUnits": [],
+      "appId": "",
+      "configurations": {
+        "material3": true,
+        "dynamic_colors": false,
+        "theme": "Light"
+      },
+      "data": "",
+      "libType": 1,
+      "reserved1": "",
+      "reserved2": "",
+      "reserved3": "",
+      "testDevices": [],
+      "useYn": "N"
+    },
+    "4": {
+      "adUnits": [],
+      "appId": "",
+      "configurations": {
+        "enabled:commonmark-ext-gfm-tables-v0.13.0": true,
+        "enabled:common-v0.6.0": true,
+        "enabled:core-v4.6.2": true,
+        "enabled:constraintlayout-2.2.1": true,
+        "enabled:cardview-1.0.0": true,
+        "enabled:ext-tables-v4.6.2": true,
+        "enabled:reactive-streams-v1.0.3": true,
+        "enabled:commonmark-v0.13.0": true,
+        "enabled:inline-parser-v4.6.2": true,
+        "enabled:slf4j-nop-v2.0.9": true,
+        "enabled:listenablefuture-v1.0": true,
+        "enabled:lottie-6.6.10": true,
+        "enabled:recyclerview-1.4.0": true,
+        "enabled:gson-2.13.1": true
+      },
+      "data": "",
+      "libType": 4,
+      "reserved1": "",
+      "reserved2": "",
+      "reserved3": "",
+      "testDevices": [],
+      "useYn": "Y"
+    },
+    "5": {
+      "adUnits": [],
+      "appId": "",
+      "configurations": {},
+      "data": "",
+      "libType": 5,
+      "reserved1": "",
+      "reserved2": "",
+      "reserved3": "",
+      "testDevices": [],
+      "useYn": "N"
+    }
+  },
+  "minSdkVersion": 21,
+  "package": "com.santoshdev.notnote",
+  "targetSdkVersion": 34,
+  "useR8": false,
+  "versionCode": 1,
+  "versionName": "1.0",
+  "viewBindingEnabled": false,
+  "zipAlignEnabled": false
+}

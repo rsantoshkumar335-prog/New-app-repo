@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Build Studio compatible standard theme -->
+    <style name="AppTheme" parent="android:Theme.Material.Light.NoActionBar">
+        <!-- Mapping to our modern colors defined in colors.xml -->
+        <item name="android:colorPrimary">@color/bg_main</item>
+        <item name="android:colorPrimaryDark">@color/bg_main</item>
+        <item name="android:colorAccent">@color/accent_color</item>
+        <item name="android:colorControlHighlight">@color/divider</item>
+        <item name="android:colorControlNormal">@color/text_secondary</item>
+		
+        <!-- Cursor aur handle ko black karne ke liye -->
+        <item name="android:colorControlActivated">#000000</item>
+        
+        <!-- Status Bar and Background Fix -->
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowBackground">#FFFFFF</item>
+        <item name="android:colorBackground">#FFFFFF</item>
+        <item name="android:statusBarColor">#FFFFFF</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+</resources>

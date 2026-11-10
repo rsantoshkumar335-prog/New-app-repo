@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Standard Colors expected by Build Studio -->
+    <color name="colorPrimary">#F9FAFB</color>
+    <color name="colorPrimaryDark">#F9FAFB</color>
+    <color name="colorAccent">#4F46E5</color>
+    <color name="colorControlHighlight">#E5E7EB</color>
+    <color name="colorControlNormal">#6B7280</color>
+
+    <!-- Modern Minimalist Palette (Our App Colors) -->
+    <color name="bg_main">#F9FAFB</color> <!-- Soft off-white background -->
+    <color name="card_bg">#FFFFFF</color> <!-- Clean white for note cards -->
+    <color name="text_primary">#111827</color> <!-- Almost black -->
+    <color name="text_secondary">#6B7280</color> <!-- Gray -->
+    <color name="accent_color">#4F46E5</color> <!-- Indigo accent -->
+    <color name="divider">#E5E7EB</color> <!-- Subtle border -->
+</resources>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Yeh cache directory ko expose karega jahan hum PDF aur Image save kar rahe hain -->
+    <cache-path name="shared_notes" path="shared_notes/" />
+</paths>

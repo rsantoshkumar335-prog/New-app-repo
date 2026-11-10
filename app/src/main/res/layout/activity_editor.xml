@@ -1,0 +1,543 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:animateLayoutChanges="true"
+    android:focusableInTouchMode="true">
+
+    <!-- Top App Bar -->
+    <RelativeLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_alignParentTop="true"
+        android:paddingHorizontal="10dp">
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_centerVertical="true"
+            android:padding="12dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/ic_back"
+            android:tint="#0F172A"
+            android:contentDescription="Save and go back" />
+
+        <!-- Status & Live Analytics Trigger -->
+        <LinearLayout
+            android:id="@+id/layout_status_analytics"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/btn_back"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="4dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="4dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_editor_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Editing Note"
+                android:textColor="#0F172A"
+                android:textSize="13.5sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_word_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0 words • 1m read"
+                android:textColor="#64748B"
+                android:textSize="11.5sp"
+                android:layout_marginTop="1dp" />
+        </LinearLayout>
+
+        <!-- Right Productivity & Styling Actions -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!-- Built-in Pomodoro Focus Timer Pill -->
+            <LinearLayout
+                android:id="@+id/btn_focus_timer"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/bg_badge_pill"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="10dp">
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/ic_timer"
+                    android:tint="#0F172A"
+                    android:contentDescription="Focus timer" />
+
+                <TextView
+                    android:id="@+id/tv_focus_timer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="25:00"
+                    android:textColor="#0F172A"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Find & Replace Toggle -->
+            <ImageView
+                android:id="@+id/btn_find_in_note"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:padding="10dp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/ic_search"
+                android:tint="#0F172A"
+                android:contentDescription="Find and replace in note" />
+
+            <!-- Pin Note Button -->
+            <ImageView
+                android:id="@+id/btn_pin_editor"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:padding="10dp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/ic_pin"
+                android:tint="#94A3B8"
+                android:contentDescription="Pin note" />
+
+            <!-- Page Color Sidebar Toggle -->
+            <ImageView
+                android:id="@+id/btn_fill_color"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:padding="10dp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/ic_fill_color"
+                android:tint="#0F172A"
+                android:contentDescription="Page color" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <!-- IN-NOTE FIND & REPLACE BAR (Collapsible) -->
+    <LinearLayout
+        android:id="@+id/layout_find_replace"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/app_bar"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="6dp"
+        android:background="@drawable/bg_chip_inactive"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="6dp"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/et_find_query"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="Find..."
+            android:singleLine="true"
+            android:textColor="#0F172A"
+            android:textColorHint="#94A3B8"
+            android:textSize="13.5sp" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="20dp"
+            android:layout_marginHorizontal="8dp"
+            android:background="#CBD5E1" />
+
+        <EditText
+            android:id="@+id/et_replace_query"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="Replace..."
+            android:singleLine="true"
+            android:textColor="#0F172A"
+            android:textColorHint="#94A3B8"
+            android:textSize="13.5sp" />
+
+        <TextView
+            android:id="@+id/btn_find_next"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_marginStart="6dp"
+            android:background="@drawable/bg_badge_pill"
+            android:gravity="center"
+            android:paddingHorizontal="10dp"
+            android:text="Find"
+            android:textColor="#0F172A"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/btn_replace_all"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_marginStart="6dp"
+            android:background="@drawable/bg_chip_active"
+            android:gravity="center"
+            android:paddingHorizontal="10dp"
+            android:text="Replace"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/btn_close_find"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginStart="4dp"
+            android:padding="5dp"
+            android:src="@drawable/ic_close"
+            android:tint="#64748B"
+            android:contentDescription="Close find bar" />
+    </LinearLayout>
+
+    <!-- MAIN EDITOR AREA -->
+    <LinearLayout
+        android:id="@+id/main_editor_area"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/layout_find_replace"
+        android:layout_above="@id/bottom_tools_container"
+        android:orientation="vertical">
+
+        <!-- Category & Quick Timestamp Metadata Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="24dp"
+            android:paddingTop="6dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/btn_category_chip"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:background="@drawable/bg_badge_pill"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="10dp">
+
+                <ImageView
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    android:src="@drawable/ic_tag"
+                    android:tint="#334155"
+                    android:contentDescription="Category" />
+
+                <TextView
+                    android:id="@+id/tv_category_chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="General"
+                    android:textColor="#1E293B"
+                    android:textSize="11.5sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/btn_quick_date_chip"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_badge_pill"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:paddingHorizontal="10dp"
+                android:text="+ Insert Date"
+                android:textColor="#334155"
+                android:textSize="11.5sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Title -->
+        <EditText
+            android:id="@+id/et_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:hint="Note Title..."
+            android:paddingHorizontal="24dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="6dp"
+            android:textColor="#0F172A"
+            android:textColorHint="#94A3B8"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:inputType="textCapSentences"
+            android:textCursorDrawable="@null" />
+
+        <!-- WEBVIEW EDITOR -->
+        <WebView
+            android:id="@+id/editor_webview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:paddingHorizontal="4dp" />
+
+    </LinearLayout>
+
+    <!-- SIDEBAR COLOR MENU -->
+    <include
+        android:id="@+id/sidebar_color_menu"
+        layout="@layout/layout_sidebar_colors"
+        android:visibility="gone"
+        android:layout_width="310dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/app_bar"
+        android:layout_marginTop="-8dp"
+        android:layout_marginEnd="-8dp"
+        android:layout_marginBottom="56dp" />
+
+    <!-- Bottom Tools Container (Always Accessible for Fluid Productivity) -->
+    <LinearLayout
+        android:id="@+id/bottom_tools_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:visibility="visible"
+        android:animateLayoutChanges="true">
+
+        <!-- Highlight Color Palette -->
+        <LinearLayout
+            android:id="@+id/color_palette_container"
+            android:layout_width="240dp"
+            android:layout_height="64dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/bg_color_palette"
+            android:elevation="1dp"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none"
+                android:overScrollMode="never">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="12dp">
+
+                    <View android:id="@+id/color_yellow" android:layout_width="36dp" android:layout_height="36dp" android:layout_marginHorizontal="8dp" android:background="@drawable/shape_color_circle" android:backgroundTint="#FFE58A" />
+                    <View android:id="@+id/color_green" android:layout_width="36dp" android:layout_height="36dp" android:layout_marginHorizontal="8dp" android:background="@drawable/shape_color_circle" android:backgroundTint="#A5FF8A" />
+                    <View android:id="@+id/color_cyan" android:layout_width="36dp" android:layout_height="36dp" android:layout_marginHorizontal="8dp" android:background="@drawable/shape_color_circle" android:backgroundTint="#8AE8FF" />
+                    <View android:id="@+id/color_red" android:layout_width="36dp" android:layout_height="36dp" android:layout_marginHorizontal="8dp" android:background="@drawable/shape_color_circle" android:backgroundTint="#FF8A8A" />
+                    <View android:id="@+id/color_magenta" android:layout_width="36dp" android:layout_height="36dp" android:layout_marginHorizontal="8dp" android:background="@drawable/shape_color_circle" android:backgroundTint="#E58AFF" />
+                    <View android:id="@+id/color_grey" android:layout_width="36dp" android:layout_height="36dp" android:layout_marginHorizontal="8dp" android:background="@drawable/shape_color_circle" android:backgroundTint="#DDDDDD" />
+
+                </LinearLayout>
+            </HorizontalScrollView>
+        </LinearLayout>
+
+        <!-- Main Capsule Shadow Layout -->
+        <com.santoshdev.notnote.SoftShadowLayout
+            android:id="@+id/main_capsule_shadow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- SINGLE UNIFIED CAPSULE -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:animateLayoutChanges="true">
+
+                    <!-- AI Chat & One-Tap Productivity Chips Container -->
+                    <LinearLayout
+                        android:id="@+id/layout_ai_tools_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <!-- One-Tap AI & Smart Actions Row -->
+                        <HorizontalScrollView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:scrollbars="none"
+                            android:overScrollMode="never"
+                            android:clipToPadding="false"
+                            android:paddingHorizontal="12dp">
+
+                            <LinearLayout
+                                android:id="@+id/ai_quick_chips_container"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical" />
+                        </HorizontalScrollView>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:background="@drawable/bg_input_capsule"
+                            android:layout_marginHorizontal="12dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:paddingHorizontal="12dp"
+                            android:paddingVertical="8dp">
+
+                            <EditText
+                                android:id="@+id/et_ai_input"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="@android:color/transparent"
+                                android:hint="Ask NotAi or pick a quick chip above..."
+                                android:paddingHorizontal="4dp"
+                                android:paddingVertical="4dp"
+                                android:textColor="#0F172A"
+                                android:textColorHint="#64748B"
+                                android:textSize="15sp"
+                                android:minHeight="32dp"
+                                android:maxLines="5" />
+
+                            <ImageView
+                                android:id="@+id/btn_ai_send"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_gravity="bottom"
+                                android:padding="6dp"
+                                android:background="@drawable/shape_color_circle"
+                                android:backgroundTint="#E0E0E0"
+                                android:src="@drawable/ic_arrow_up"
+                                android:tint="#888888"
+                                android:contentDescription="Send AI prompt" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Formatting & Productivity Toolbar -->
+                    <HorizontalScrollView
+                        android:id="@+id/format_toolbar_scroll"
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:scrollbars="none"
+                        android:overScrollMode="never">
+
+                        <LinearLayout
+                            android:id="@+id/format_toolbar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="12dp">
+
+                            <ImageView
+                                android:id="@+id/btn_close_ai"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:padding="10dp"
+                                android:src="@drawable/ic_arrow_down"
+                                android:background="@drawable/bg_capsule_chip_no_border"
+                                android:visibility="gone"
+                                android:contentDescription="Close AI bar" />
+
+                            <ImageView
+                                android:id="@+id/btn_ai_action"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:padding="8dp"
+                                android:src="@drawable/ic_notai"
+                                android:background="?android:attr/selectableItemBackgroundBorderless"
+                                android:contentDescription="Open NotAi" />
+
+                            <View android:layout_width="1dp" android:layout_height="24dp" android:background="#E5E7EB" android:layout_marginHorizontal="4dp"/>
+
+                            <!-- Voice Dictation Button -->
+                            <ImageView android:id="@+id/btn_voice_input" android:layout_width="40dp" android:layout_height="40dp" android:padding="9dp" android:src="@drawable/ic_mic" android:tint="#0F172A" android:background="?android:attr/selectableItemBackgroundBorderless" android:contentDescription="Voice dictation" />
+
+                            <!-- Checklist Button (Prominent for fast productivity) -->
+                            <ImageView android:id="@+id/btn_check" android:layout_width="40dp" android:layout_height="40dp" android:padding="10dp" android:src="@drawable/ic_checklist" android:tint="#0F172A" android:background="?android:attr/selectableItemBackgroundBorderless" android:contentDescription="Insert checkbox" />
+
+                            <View android:layout_width="1dp" android:layout_height="24dp" android:background="#E5E7EB" android:layout_marginHorizontal="4dp"/>
+
+                            <ImageView android:id="@+id/btn_undo" android:layout_width="40dp" android:layout_height="40dp" android:padding="10dp" android:src="@drawable/ic_undo" android:tint="#0F172A" android:background="?android:attr/selectableItemBackgroundBorderless" android:contentDescription="Undo" />
+                            <ImageView android:id="@+id/btn_redo" android:layout_width="40dp" android:layout_height="40dp" android:padding="10dp" android:src="@drawable/ic_redo" android:tint="#0F172A" android:background="?android:attr/selectableItemBackgroundBorderless" android:contentDescription="Redo" />
+                            <View android:layout_width="1dp" android:layout_height="24dp" android:background="#E5E7EB" android:layout_marginHorizontal="4dp"/>
+
+                            <ImageView android:id="@+id/btn_bold" android:layout_width="40dp" android:layout_height="40dp" android:padding="10dp" android:src="@drawable/ic_bold" android:tint="#0F172A" android:background="?android:attr/selectableItemBackgroundBorderless" android:contentDescription="Bold" />
+                            <ImageView android:id="@+id/btn_italic" android:layout_width="40dp" android:layout_height="40dp" android:padding="10dp" android:src="@drawable/ic_italic" android:tint="#0F172A" android:background="?android:attr/selectableItemBackgroundBorderless" android:contentDescription="Italic" />
+                            <ImageView android:id="@+id/btn_underline" android:layout_width="40dp" android:layout_height="40dp" android:padding="10dp" android:src="@drawable/ic_underline" android:tint="#0F172A" android:background="?android:attr/selectableItemBackgroundBorderless" android:contentDescription="Underline" />
+                            <ImageView android:id="@+id/btn_strike" android:layout_width="40dp" android:layout_height="40dp" android:padding="10dp" android:src="@drawable/ic_strikethrough" android:tint="#0F172A" android:background="?android:attr/selectableItemBackgroundBorderless" android:contentDescription="Strikethrough" />
+                            <ImageView android:id="@+id/btn_highlight" android:layout_width="40dp" android:layout_height="40dp" android:padding="10dp" android:src="@drawable/ic_highlighter" android:tint="#0F172A" android:background="?android:attr/selectableItemBackgroundBorderless" android:contentDescription="Highlight" />
+                            <View android:layout_width="1dp" android:layout_height="24dp" android:background="#E5E7EB" android:layout_marginHorizontal="4dp"/>
+
+                            <ImageView android:id="@+id/btn_h1" android:layout_width="40dp" android:layout_height="40dp" android:padding="10dp" android:src="@drawable/ic_h1" android:tint="#0F172A" android:background="?android:attr/selectableItemBackgroundBorderless" android:contentDescription="Heading 1" />
+                            <ImageView android:id="@+id/btn_h2" android:layout_width="40dp" android:layout_height="40dp" android:padding="10dp" android:src="@drawable/ic_h2" android:tint="#0F172A" android:background="?android:attr/selectableItemBackgroundBorderless" android:contentDescription="Heading 2" />
+                            <ImageView android:id="@+id/btn_h3" android:layout_width="40dp" android:layout_height="40dp" android:padding="10dp" android:src="@drawable/ic_h3" android:tint="#0F172A" android:background="?android:attr/selectableItemBackgroundBorderless" android:contentDescription="Heading 3" />
+                            <ImageView android:id="@+id/btn_h4" android:layout_width="40dp" android:layout_height="40dp" android:padding="10dp" android:src="@drawable/ic_h4" android:tint="#0F172A" android:background="?android:attr/selectableItemBackgroundBorderless" android:contentDescription="Heading 4" />
+                            <ImageView android:id="@+id/btn_h5" android:layout_width="40dp" android:layout_height="40dp" android:padding="10dp" android:src="@drawable/ic_h5" android:tint="#0F172A" android:background="?android:attr/selectableItemBackgroundBorderless" android:contentDescription="Heading 5" />
+                            <ImageView android:id="@+id/btn_h6" android:layout_width="40dp" android:layout_height="40dp" android:padding="10dp" android:src="@drawable/ic_h6" android:tint="#0F172A" android:background="?android:attr/selectableItemBackgroundBorderless" android:contentDescription="Heading 6" />
+                            <View android:layout_width="1dp" android:layout_height="24dp" android:background="#E5E7EB" android:layout_marginHorizontal="4dp"/>
+
+                            <ImageView android:id="@+id/btn_bullet" android:layout_width="40dp" android:layout_height="40dp" android:padding="10dp" android:src="@drawable/ic_bullet_list" android:tint="#0F172A" android:background="?android:attr/selectableItemBackgroundBorderless" android:contentDescription="Bullet list" />
+                            <ImageView android:id="@+id/btn_number" android:layout_width="40dp" android:layout_height="40dp" android:padding="10dp" android:src="@drawable/ic_number" android:tint="#0F172A" android:background="?android:attr/selectableItemBackgroundBorderless" android:contentDescription="Numbered list" />
+                            <ImageView android:id="@+id/btn_image" android:layout_width="40dp" android:layout_height="40dp" android:padding="10dp" android:src="@drawable/ic_image" android:tint="#0F172A" android:background="?android:attr/selectableItemBackgroundBorderless" android:contentDescription="Insert image" />
+                            <ImageView android:id="@+id/btn_link" android:layout_width="40dp" android:layout_height="40dp" android:padding="10dp" android:src="@drawable/ic_link" android:tint="#0F172A" android:background="?android:attr/selectableItemBackgroundBorderless" android:contentDescription="Insert link" />
+                            <ImageView android:id="@+id/btn_insert_date" android:layout_width="40dp" android:layout_height="40dp" android:padding="10dp" android:src="@drawable/ic_calendar" android:tint="#0F172A" android:background="?android:attr/selectableItemBackgroundBorderless" android:contentDescription="Insert timestamp" />
+                            <ImageView android:id="@+id/btn_insert_divider" android:layout_width="40dp" android:layout_height="40dp" android:padding="10dp" android:src="@drawable/ic_divider" android:tint="#0F172A" android:background="?android:attr/selectableItemBackgroundBorderless" android:contentDescription="Insert divider" />
+                            <ImageView android:id="@+id/btn_copy_note" android:layout_width="40dp" android:layout_height="40dp" android:padding="10dp" android:src="@drawable/ic_copy" android:tint="#0F172A" android:background="?android:attr/selectableItemBackgroundBorderless" android:contentDescription="Copy note text" />
+
+                        </LinearLayout>
+                    </HorizontalScrollView>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </com.santoshdev.notnote.SoftShadowLayout>
+
+    </LinearLayout>
+</RelativeLayout>

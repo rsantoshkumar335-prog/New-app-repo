@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+
+    <!-- Group for -45 degree rotation -->
+    <group
+        android:pivotX="50"
+        android:pivotY="50"
+        android:rotation="-45">
+        
+        <!-- Main center curves -->
+        <path
+            android:pathData="M 25 25 Q 50 50 75 25 Q 50 50 75 75 Q 50 50 25 75 Q 50 50 25 25"
+            android:strokeWidth="1.5"
+            android:strokeColor="#000000"
+            android:fillColor="#00000000" />
+
+        <!-- Top Left Dot -->
+        <path
+            android:pathData="M 25,20 A 5,5 0 1,1 25,30 A 5,5 0 1,1 25,20"
+            android:fillColor="#000000" />
+
+        <!-- Top Right Dot -->
+        <path
+            android:pathData="M 75,20 A 5,5 0 1,1 75,30 A 5,5 0 1,1 75,20"
+            android:fillColor="#000000" />
+
+        <!-- Bottom Left Dot -->
+        <path
+            android:pathData="M 25,70 A 5,5 0 1,1 25,80 A 5,5 0 1,1 25,70"
+            android:fillColor="#000000" />
+
+        <!-- Bottom Right Dot -->
+        <path
+            android:pathData="M 75,70 A 5,5 0 1,1 75,80 A 5,5 0 1,1 75,70"
+            android:fillColor="#000000" />
+    </group>
+
+    <!-- Center Circle with Linear Gradient -->
+    <path android:pathData="M 50,45 A 5,5 0 1,1 50,55 A 5,5 0 1,1 50,45">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:type="linear"
+                android:startX="45"
+                android:startY="45"
+                android:endX="55"
+                android:endY="55">
+                <item
+                    android:color="#FFFF99"
+                    android:offset="0.2" />
+                <item
+                    android:color="#000000"
+                    android:offset="0.8" />
+            </gradient>
+        </aapt:attr>
+    </path>
+</vector>

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css">
+
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0; 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-size: 16.5px; 
+            color: #0F172A;
+            background-color: transparent;
+            overflow-x: hidden !important; 
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        #editor {
+            min-height: 100vh;
+            padding: 12px 24px 160px 24px;
+            outline: none; 
+            word-wrap: break-word;
+            line-height: 1.6;
+        }
+
+        #editor[placeholder]:empty:before {
+            content: attr(placeholder);
+            color: #94A3B8;
+            pointer-events: none;
+            display: block;
+        }
+
+        img { 
+            max-width: 100%; 
+            height: auto; 
+            border-radius: 14px; 
+            margin: 16px 0; 
+            display: block;
+        }
+        p { margin-top: 0; margin-bottom: 12px; }
+        ul, ol { margin-top: 0; margin-bottom: 16px; padding-left: 24px; }
+        li { margin-bottom: 8px; }
+        h1, h2, h3, h4, h5, h6 { margin-top: 18px; margin-bottom: 8px; font-weight: 700; color: #0F172A; }
+        
+        h1 { font-size: 1.85em; }
+        h2 { font-size: 1.45em; }
+        h3 { font-size: 1.2em; }
+
+        hr {
+            border: none;
+            border-top: 1.5px solid rgba(15, 23, 42, 0.14);
+            margin: 18px 0;
+        }
+
+        blockquote {
+            border-left: 3.5px solid #4F46E5;
+            margin: 12px 0;
+            padding: 6px 14px;
+            background: rgba(79, 70, 229, 0.06);
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* TASK LIST STYLES */
+        .checkbox {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.22em;
+            height: 1.22em;
+            margin-right: 8px;
+            color: #475569;
+            cursor: pointer;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .checkbox.checked {
+            color: #10B981;
+        }
+        
+        .task-line {
+            display: flex;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+        
+        .task-completed {
+            text-decoration: line-through !important;
+            color: #94A3B8 !important;
+            opacity: 0.85;
+        }
+
+        .timestamp-pill {
+            display: inline-block;
+            background: rgba(15, 23, 42, 0.08);
+            color: #334155;
+            font-size: 0.82em;
+            font-weight: 600;
+            padding: 2px 10px;
+            border-radius: 999px;
+            margin: 2px 4px 2px 0;
+        }
+
+        .katex-display {
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 10px 0;
+            touch-action: pan-x;
+        }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked@4.3.0/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+</head>
+<body>
+
+    <div id="editor" contenteditable="true" placeholder="Start typing, add tasks (☐), or tap ✨ NotAi below..."></div>
+
+    <script>
+        const editor = document.getElementById('editor');
+        let lastSyncedHtml = ""; 
+        
+        const svgCheckSquare = `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" viewBox="0 0 256 256"><path d="M172.24,99.76a6,6,0,0,1,0,8.48l-56,56a6,6,0,0,1-8.48,0l-24-24a6,6,0,0,1,8.48-8.48L112,151.51l51.76-51.75A6,6,0,0,1,172.24,99.76ZM222,48V208a14,14,0,0,1-14,14H48a14,14,0,0,1-14-14V48A14,14,0,0,1,48,34H208A14,14,0,0,1,222,48Zm-12,0a2,2,0,0,0-2-2H48a2,2,0,0,0-2,2V208a2,2,0,0,0,2,2H208a2,2,0,0,0,2-2Z"></path></svg>`;
+        const svgUncheckSquare = `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" viewBox="0 0 256 256"><path d="M208,48V208H48V48H208m0-16H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48a16,16,0,0,0-16-16Z"></path></svg>`;
+
+        function syncToAndroid() {
+            let currentHtml = editor.innerHTML;
+            if (currentHtml !== lastSyncedHtml) {
+                lastSyncedHtml = currentHtml;
+                if (window.Android && window.Android.onTextChanged) {
+                    window.Android.onTextChanged(currentHtml, editor.innerText);
+                }
+            }
+        }
+
+        let typingTimer;
+        editor.addEventListener('input', function() {
+            clearTimeout(typingTimer);
+            typingTimer = setTimeout(syncToAndroid, 350);
+        });
+
+        editor.addEventListener('blur', syncToAndroid);
+
+        function getHtml() {
+            return editor.innerHTML;
+        }
+
+        function setHtml(html, isInitialLoad = false) {
+            editor.innerHTML = html;
+            renderMath();
+            restoreCheckboxStates();
+            
+            if (isInitialLoad) {
+                lastSyncedHtml = editor.innerHTML; 
+                if (window.Android && window.Android.onTextChanged) {
+                    window.Android.onTextChanged(editor.innerHTML, editor.innerText);
+                }
+            }
+        }
+
+        function decodeBase64Utf8(base64Text) {
+            try {
+                let binaryString = window.atob(base64Text);
+                let bytes = new Uint8Array(binaryString.length);
+                for (let i = 0; i < binaryString.length; i++) {
+                    bytes[i] = binaryString.charCodeAt(i);
+                }
+                return new TextDecoder("utf-8").decode(bytes);
+            } catch (e) {
+                return decodeURIComponent(escape(window.atob(base64Text)));
+            }
+        }
+
+        function setHtmlFromBase64(base64Text) {
+            try {
+                setHtml(decodeBase64Utf8(base64Text), true); 
+            } catch (e) {
+                console.error("setHtmlFromBase64 Error: ", e);
+            }
+        }
+
+        function receiveAiResponseBase64(base64Text, replaceCurrent) {
+            try {
+                let decodedText = decodeBase64Utf8(base64Text);
+                insertAiResponse(decodedText, replaceCurrent);
+            } catch (e) {
+                console.error("AI Decode Error: ", e);
+            }
+        }
+
+        function formatDoc(cmd, value=null) {
+            editor.focus();
+            document.execCommand(cmd, false, value);
+            syncToAndroid();
+        }
+
+        function toggleHeading(tag) {
+            formatDoc('formatBlock', tag);
+        }
+
+        function toggleHighlight(colorHex) {
+            formatDoc('hiliteColor', colorHex);
+        }
+
+        function insertImage(imagePath, w, h) {
+            const imgHtml = `<img src="file://${imagePath}" width="${w}" height="${h}" alt="Image" /><br>`;
+            formatDoc('insertHTML', imgHtml);
+        }
+
+        function insertCheckbox() {
+            const html = `<span class="task-line"><span class="checkbox" contenteditable="false">${svgUncheckSquare}</span>&nbsp;</span>`;
+            formatDoc('insertHTML', html);
+        }
+
+        function insertDivider() {
+            formatDoc('insertHTML', '<hr><p><br></p>');
+        }
+
+        function insertTimestampPill(label) {
+            const html = `<span class="timestamp-pill" contenteditable="false">📅 ${label}</span>&nbsp;`;
+            formatDoc('insertHTML', html);
+        }
+
+        function insertDictatedText(base64Text) {
+            try {
+                let text = decodeBase64Utf8(base64Text);
+                formatDoc('insertText', text + ' ');
+            } catch (e) {}
+        }
+
+        function findInNote(query) {
+            if (!query) return;
+            window.find(query, false, false, true, false, false, false);
+        }
+
+        function replaceAllInNote(findBase64, replaceBase64) {
+            try {
+                let findStr = decodeBase64Utf8(findBase64);
+                let replaceStr = decodeBase64Utf8(replaceBase64);
+                if (!findStr) return;
+                let walker = document.createTreeWalker(editor, NodeFilter.SHOW_TEXT, null, false);
+                let node;
+                while ((node = walker.nextNode())) {
+                    if (node.nodeValue && node.nodeValue.includes(findStr)) {
+                        node.nodeValue = node.nodeValue.split(findStr).join(replaceStr);
+                    }
+                }
+                syncToAndroid();
+            } catch (e) {}
+        }
+
+        editor.addEventListener('click', function(e) {
+            let target = e.target.closest('.checkbox');
+            if (target) {
+                e.preventDefault();
+                target.blur();
+                if(document.activeElement) document.activeElement.blur();
+                window.getSelection().removeAllRanges();
+
+                let isChecked = target.classList.contains('checked');
+                let parentNode = target.parentNode;
+
+                if (isChecked) {
+                    target.innerHTML = svgUncheckSquare;
+                    target.classList.remove('checked');
+                    if (parentNode && parentNode.classList.contains('task-line')) {
+                         parentNode.classList.remove('task-completed');
+                    }
+                } else {
+                    target.innerHTML = svgCheckSquare;
+                    target.classList.add('checked');
+                    if (parentNode && parentNode.classList.contains('task-line')) {
+                         parentNode.classList.add('task-completed');
+                    }
+                }
+
+                syncToAndroid(); 
+            }
+        });
+
+        function restoreCheckboxStates() {
+            document.querySelectorAll('.checkbox').forEach(cb => {
+                cb.setAttribute('contenteditable', 'false'); 
+                if(cb.innerHTML.includes('☑') || (cb.innerHTML.includes('<svg') && cb.classList.contains('checked')) || cb.classList.contains('checked')) {
+                    cb.classList.add('checked');
+                    cb.innerHTML = svgCheckSquare;
+                    if(cb.parentNode && cb.parentNode.classList.contains('task-line')) {
+                         cb.parentNode.classList.add('task-completed');
+                    }
+                } else {
+                    cb.innerHTML = svgUncheckSquare;
+                }
+            });
+        }
+
+        function insertAiResponse(markdownText, replaceCurrent) {
+            let htmlContent = "";
+            try {
+                if (typeof marked !== 'undefined') {
+                    marked.setOptions({ breaks: true });
+                    htmlContent = marked.parse(markdownText);
+                } else {
+                    htmlContent = markdownText.replace(/\n/g, '<br>');
+                }
+            } catch(e) {
+                htmlContent = markdownText.replace(/\n/g, '<br>');
+            }
+            
+            htmlContent = htmlContent.replace(/☐\s*(.*?)(<br>|<\/p>|$)/g, '<span class="task-line"><span class="checkbox" contenteditable="false">' + svgUncheckSquare + '</span> $1</span>$2');
+            htmlContent = htmlContent.replace(/☑\s*(.*?)(<br>|<\/p>|$)/g, '<span class="task-line task-completed"><span class="checkbox checked" contenteditable="false">' + svgCheckSquare + '</span> $1</span>$2');
+            
+            if (replaceCurrent) {
+                setHtml(htmlContent, false);
+            } else {
+                editor.focus();
+                let sel = window.getSelection();
+                
+                if (!sel.rangeCount || !editor.contains(sel.anchorNode)) {
+                    let range = document.createRange();
+                    range.selectNodeContents(editor);
+                    range.collapse(false); 
+                    sel.removeAllRanges();
+                    sel.addRange(range);
+                }
+                
+                let success = document.execCommand('insertHTML', false, htmlContent);
+                if (!success) {
+                    editor.innerHTML += htmlContent;
+                }
+            }
+            renderMath();
+            restoreCheckboxStates();
+            syncToAndroid();
+        }
+
+        function renderMath() {
+            try {
+                if (typeof renderMathInElement !== 'undefined') {
+                    renderMathInElement(editor, {
+                        delimiters: [
+                            {left: '$$', right: '$$', display: true},
+                            {left: '\\[', right: '\\]', display: true},
+                            {left: '$', right: '$', display: false},
+                            {left: '\\(', right: '\\)', display: false}
+                        ],
+                        throwOnError: false
+                    });
+                }
+            } catch (e) {}
+        }
+    </script>
+</body>
+</html>

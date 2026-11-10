@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#00000000"
+    android:padding="0dp">
+
+    <!-- Modern Floating Multi-Action Capsule -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/menu_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="20dp"
+        app:cardBackgroundColor="#FFFFFF"
+        app:cardCornerRadius="32dp"
+        app:cardElevation="12dp">
+
+        <HorizontalScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:overScrollMode="never">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingVertical="10dp"
+                android:paddingHorizontal="12dp">
+
+                <!-- 1. Select All / Deselect All Capsule -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btn_menu_select_all"
+                    android:layout_width="wrap_content"
+                    android:layout_height="46dp"
+                    android:layout_marginEnd="6dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    app:cardBackgroundColor="#F1F5F9"
+                    app:cardCornerRadius="23dp"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="14dp">
+
+                        <ImageView
+                            android:id="@+id/iv_select_all_icon"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@drawable/ic_select_all"
+                            android:tint="#0F172A"
+                            android:contentDescription="Select all" />
+
+                        <TextView
+                            android:id="@+id/tv_select_all_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="6dp"
+                            android:text="Select All"
+                            android:textColor="#0F172A"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- 2. Pin / Unpin Action -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btn_menu_pin"
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
+                    android:layout_marginEnd="6dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    app:cardBackgroundColor="#FEF3C7"
+                    app:cardCornerRadius="23dp"
+                    app:cardElevation="0dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_pin"
+                        android:tint="#0F172A"
+                        android:contentDescription="Pin or unpin note" />
+                </androidx.cardview.widget.CardView>
+
+                <!-- 3. Category Tag Action -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btn_menu_tag"
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
+                    android:layout_marginEnd="6dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    app:cardBackgroundColor="#E0E7FF"
+                    app:cardCornerRadius="23dp"
+                    app:cardElevation="0dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_tag"
+                        android:tint="#0F172A"
+                        android:contentDescription="Set category" />
+                </androidx.cardview.widget.CardView>
+
+                <!-- 4. Duplicate Note Action -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btn_menu_duplicate"
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
+                    android:layout_marginEnd="6dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    app:cardBackgroundColor="#F1F5F9"
+                    app:cardCornerRadius="23dp"
+                    app:cardElevation="0dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_copy"
+                        android:tint="#0F172A"
+                        android:contentDescription="Duplicate note" />
+                </androidx.cardview.widget.CardView>
+
+                <!-- 5. Share Circle -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btn_menu_share"
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
+                    android:layout_marginEnd="6dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    app:cardBackgroundColor="#F1F5F9"
+                    app:cardCornerRadius="23dp"
+                    app:cardElevation="0dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_share"
+                        android:tint="#0F172A"
+                        android:contentDescription="Share note" />
+                </androidx.cardview.widget.CardView>
+
+                <!-- 6. Private Vault Circle -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btn_menu_private"
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
+                    android:layout_marginEnd="6dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    app:cardBackgroundColor="#F1F5F9"
+                    app:cardCornerRadius="23dp"
+                    app:cardElevation="0dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_private"
+                        android:tint="#0F172A"
+                        android:contentDescription="Move to Private Vault" />
+                </androidx.cardview.widget.CardView>
+
+                <!-- 7. Delete Squircle -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btn_menu_delete"
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    app:cardBackgroundColor="#FEE2E2"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_delete_dialog"
+                        android:tint="#DC2626"
+                        android:contentDescription="Delete note" />
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+        </HorizontalScrollView>
+    </androidx.cardview.widget.CardView>
+</FrameLayout>

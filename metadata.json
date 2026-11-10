@@ -1,0 +1,6 @@
+{
+  "name": "Notnote",
+  "description": "A modern, fluid, AI-powered rich note-taking and productivity workspace with task checklists, color palettes, focus timer, templates, and private vault.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

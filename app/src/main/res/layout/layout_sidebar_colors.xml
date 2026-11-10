@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Root ko ab SoftShadowLayout banaya gaya hai custom shadow ke liye -->
+<com.santoshdev.notnote.SoftShadowLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:focusable="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- Title ko left align karke bada kiya gaya -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Choose colour"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:gravity="start"
+            android:paddingStart="24dp"
+            android:paddingTop="32dp"
+            android:paddingBottom="24dp" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none"
+            android:overScrollMode="never"
+            android:clipToPadding="false"
+            android:paddingBottom="80dp">
+
+            <LinearLayout
+                android:id="@+id/color_items_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal">
+
+                <!-- White Capsule: Compact, zyada curved aur perfectly spaced -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="180dp"
+                    android:layout_height="80dp"
+                    android:layout_marginBottom="28dp"
+                    app:cardBackgroundColor="#F5F5F5"
+                    app:cardCornerRadius="40dp"
+                    app:cardElevation="0dp">
+                    
+                    <FrameLayout
+                        android:id="@+id/color_white"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <!-- Main White Shape Capsule (Inner) -->
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/color_shape"
+                            android:layout_width="140dp"
+                            android:layout_height="52dp"
+                            android:layout_gravity="center"
+                            app:cardBackgroundColor="#FFFFFF"
+                            app:cardCornerRadius="26dp"
+                            app:cardElevation="0dp">
+                            
+                            <FrameLayout
+                                android:id="@+id/check_container"
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:layout_gravity="center"
+                                android:visibility="gone">
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/shape_color_circle"
+                                    android:backgroundTint="#000000" />
+
+                                <ImageView
+                                    android:layout_width="16dp"
+                                    android:layout_height="16dp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/ic_check_white" />
+                            </FrameLayout>
+                        </androidx.cardview.widget.CardView>
+                    </FrameLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- 2 Column Grid Colors -->
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center" android:layout_marginBottom="24dp">
+                    <include layout="@layout/item_color_preview" android:id="@+id/color_ef9a9a" />
+                    <View android:layout_width="24dp" android:layout_height="1dp" />
+                    <include layout="@layout/item_color_preview" android:id="@+id/color_e57373" />
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center" android:layout_marginBottom="24dp">
+                    <include layout="@layout/item_color_preview" android:id="@+id/color_b71c1c" />
+                    <View android:layout_width="24dp" android:layout_height="1dp" />
+                    <include layout="@layout/item_color_preview" android:id="@+id/color_f06292" />
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center" android:layout_marginBottom="24dp">
+                    <include layout="@layout/item_color_preview" android:id="@+id/color_ce93d8" />
+                    <View android:layout_width="24dp" android:layout_height="1dp" />
+                    <include layout="@layout/item_color_preview" android:id="@+id/color_e1bee7" />
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center" android:layout_marginBottom="24dp">
+                    <include layout="@layout/item_color_preview" android:id="@+id/color_b39ddb" />
+                    <View android:layout_width="24dp" android:layout_height="1dp" />
+                    <include layout="@layout/item_color_preview" android:id="@+id/color_d1c4e9" />
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center" android:layout_marginBottom="24dp">
+                    <include layout="@layout/item_color_preview" android:id="@+id/color_9fa8da" />
+                    <View android:layout_width="24dp" android:layout_height="1dp" />
+                    <include layout="@layout/item_color_preview" android:id="@+id/color_c5cae9" />
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center" android:layout_marginBottom="24dp">
+                    <include layout="@layout/item_color_preview" android:id="@+id/color_b2ebf2" />
+                    <View android:layout_width="24dp" android:layout_height="1dp" />
+                    <include layout="@layout/item_color_preview" android:id="@+id/color_80cbc4" />
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center" android:layout_marginBottom="24dp">
+                    <include layout="@layout/item_color_preview" android:id="@+id/color_b2dfdb" />
+                    <View android:layout_width="24dp" android:layout_height="1dp" />
+                    <include layout="@layout/item_color_preview" android:id="@+id/color_a5d6a7" />
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center" android:layout_marginBottom="24dp">
+                    <include layout="@layout/item_color_preview" android:id="@+id/color_c8e6c9" />
+                    <View android:layout_width="24dp" android:layout_height="1dp" />
+                    <include layout="@layout/item_color_preview" android:id="@+id/color_f9fbe7" />
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center" android:layout_marginBottom="24dp">
+                    <include layout="@layout/item_color_preview" android:id="@+id/color_ffe0b2" />
+                    <View android:layout_width="24dp" android:layout_height="1dp" />
+                    <include layout="@layout/item_color_preview" android:id="@+id/color_d7ccc8" />
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center" android:layout_marginBottom="24dp">
+                    <include layout="@layout/item_color_preview" android:id="@+id/color_bcaaa4" />
+                    <View android:layout_width="24dp" android:layout_height="1dp" />
+                    <include layout="@layout/item_color_preview" android:id="@+id/color_f0f4c3" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</com.santoshdev.notnote.SoftShadowLayout>

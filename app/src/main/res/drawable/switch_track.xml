@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Jab Switch ON hoga (Black track) -->
+    <item android:state_checked="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#000000" />
+            <!-- Pill shape ke liye radius -->
+            <corners android:radius="30dp" />
+            <!-- Track ki overall width aur height -->
+            <size android:width="54dp" android:height="32dp" />
+        </shape>
+    </item>
+
+    <!-- Jab Switch OFF hoga (Light Gray track) -->
+    <item android:state_checked="false">
+        <shape android:shape="rectangle">
+            <solid android:color="#E5E5EA" />
+            <!-- Pill shape ke liye radius -->
+            <corners android:radius="30dp" />
+            <size android:width="54dp" android:height="32dp" />
+        </shape>
+    </item>
+</selector>
